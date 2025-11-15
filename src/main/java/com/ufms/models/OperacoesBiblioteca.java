@@ -1,8 +1,7 @@
 package com.ufms.models;
 
-public interface OperacoesBiblioteca {
-	void adicionarItem(ItemBiblioteca item);
-	void buscarItem(ItemBiblioteca item);
-	void emprestimoItem (ItemEmprestimo emprestimo);
-	void devolucaoItem (ItemEmprestimo emprestimo);
+public interface OperacoesBiblioteca extends OperacoesEmprestimo, OperacoesItem {
+	void realizarEmprestimo(ItemBiblioteca item);
+	void realizarDevolucao(ItemBiblioteca item);
+	void verificarHistorico(ItemBiblioteca item);
 }
