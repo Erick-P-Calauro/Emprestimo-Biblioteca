@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import com.ufms.models.ItemBiblioteca;
+import com.ufms.models.Emprestimo;
 import com.ufms.models.IEmprestimo;
 import com.ufms.models.OperacoesBiblioteca;
 
@@ -26,11 +27,8 @@ public class ControleBiblioteca implements OperacoesBiblioteca {
 
     @Override
     public void registrarDevolucao(IEmprestimo emprestimo) {
-
     	this.historico.add(emprestimo);
         System.out.println("Devolução registrada no histórico: " + emprestimo.toString());
-
- 
     }
 
     @Override
@@ -42,8 +40,7 @@ public class ControleBiblioteca implements OperacoesBiblioteca {
 
     @Override
     public void adicionarItem(ItemBiblioteca item) {
-           this.itens.add(item);
-        
+        this.itens.add(item);
     }
 
     @Override
@@ -90,20 +87,57 @@ public class ControleBiblioteca implements OperacoesBiblioteca {
         }
     }
     @Override
-    public void realizarEmprestimo(ItemBiblioteca item) {
-    	// TODO Auto-generated method stub
-    	throw new UnsupportedOperationException("Unimplemented method 'realizarEmprestimo'");
+    public void realizarEmprestimo(ItemBiblioteca item, String RA_Devedor) {
+        
+        if(item.isStatus()) {
+            System.out.println("O Item em questão já está emprestado.");
+            
+            return;
+        }
+        
+        item.setStatus(true);
+        this.editarItem(item.getCodigo(), item);
+
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.setRADevedor(RA_Devedor);
+        emprestimo.setItem(item);
+        emprestimo.setInicioEmprestimo(LocalDateTime.now());
+
+
+        this.registrarEmprestimo(emprestimo);
     }
 
 
     @Override
-    public void realizarDevolucao(ItemBiblioteca item) {
-    	// TODO Auto-generated method stub
-    	throw new UnsupportedOperationException("Unimplemented method 'realizarDevolucao'");
+    public void realizarDevolucao(ItemBiblioteca item, String RA_Devedor) {
+    	
+        if(!item.isStatus()) {
+            System.out.println("Não há nenhum empréstimo associado ao item");
+        }
+        
+        item.setStatus(false);
+        this.editarItem(item.getCodigo(), item);
+
+        for(IEmprestimo e : historico) {
+            if(e instanceof Emprestimo em) {
+                if(em.getItem().getCodigo() == item.getCodigo()) {
+                    em.setFimEmprestimo(LocalDateTime.now());
+                    historico.set(historico.indexOf(e), em);
+                }
+            }
+        }
     }
+
     @Override
-    public void verificarHistorico(ItemBiblioteca item) {
-    	// TODO Auto-generated method stub
-    	throw new UnsupportedOperationException("Unimplemented method 'verificarHistorico'");
+    public List<IEmprestimo> verificarHistorico(ItemBiblioteca item) {
+    	List<IEmprestimo> item_historico = new ArrayList<IEmprestimo>();
+        
+        for(IEmprestimo e : historico) {
+            if(e instanceof Emprestimo em && em.getItem().getCodigo() == item.getCodigo()) {
+                item_historico.add(em);
+            }
+        }
+
+        return item_historico;
     }
 }

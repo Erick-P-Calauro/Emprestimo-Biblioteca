@@ -6,12 +6,12 @@ public class Livro extends ItemBiblioteca{
 	private String categoria;
 	private int ano_publicacao;
 
-	Livro() {
+	public Livro() {
 
 	}
 
-	Livro(int codigo, boolean status, String autor, String nome, String categoria, int ano_publicacao) {
-		super(codigo, status);
+	public Livro(int codigo, String autor, String nome, String categoria, int ano_publicacao) {
+		super(codigo, false);
 		this.autor = autor;
 		this.nome = nome;
 		this.categoria = categoria;
@@ -43,5 +43,9 @@ public class Livro extends ItemBiblioteca{
 		this.ano_publicacao = ano_publicacao;
 	}
 
+	@Override
+	public String toString() {
+		return "(Livro " + this.getCodigo() + " : " + this.nome + " " + this.autor + " )";
+	}
 	
 }

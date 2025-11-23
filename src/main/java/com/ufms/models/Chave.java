@@ -3,12 +3,12 @@ package com.ufms.models;
 public class Chave extends ItemBiblioteca {
 	private int numeroArmario;
 
-	Chave() {
+	public Chave() {
 
 	}
 
-	Chave(int codigo, boolean status, int numeroArmario) {
-		super(codigo, status);
+	public Chave(int codigo, int numeroArmario) {
+		super(codigo, false);
 		this.numeroArmario = numeroArmario;
 	}
 
@@ -18,6 +18,11 @@ public class Chave extends ItemBiblioteca {
 
 	public void setNumeroArmario(int numeroArmario) {
 		this.numeroArmario = numeroArmario;
+	}
+
+	@Override
+	public String toString() {
+		return "(Chave " + this.getCodigo() + " : " + this.numeroArmario + " )";
 	}
 
 	

@@ -6,11 +6,11 @@ public class Emprestimo extends IEmprestimo {
     
     private ItemBiblioteca item;
 
-    Emprestimo() {
+    public Emprestimo() {
 
     }
 
-    Emprestimo(String RADevedor, LocalDateTime inicioEmprestimo, LocalDateTime fimEmprestimo, ItemBiblioteca item) {
+    public Emprestimo(String RADevedor, LocalDateTime inicioEmprestimo, LocalDateTime fimEmprestimo, ItemBiblioteca item) {
         super(RADevedor, inicioEmprestimo, fimEmprestimo);
         this.item = item;
     }
@@ -21,6 +21,11 @@ public class Emprestimo extends IEmprestimo {
 
     public void setItem(ItemBiblioteca item) {
         this.item = item;
+    }
+
+    @Override
+    public String toString() {
+        return "(Empréstimo de " + this.getRADevedor() + " : Item : " + this.item + " - " + this.getInicioEmprestimo() + " até " + this.getFimEmprestimo() + " ) ";
     }
 
 }

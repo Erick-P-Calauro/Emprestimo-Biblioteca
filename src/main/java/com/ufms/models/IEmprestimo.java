@@ -44,6 +44,5 @@ public abstract class IEmprestimo {
 	public void setFimEmprestimo(LocalDateTime fimEmprestimo) {
 		this.fimEmprestimo = fimEmprestimo;
 	}
-
 	
 }
