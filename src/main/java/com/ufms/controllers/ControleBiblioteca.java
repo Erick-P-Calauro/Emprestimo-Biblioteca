@@ -40,6 +40,12 @@ public class ControleBiblioteca implements OperacoesBiblioteca {
 
     @Override
     public void adicionarItem(ItemBiblioteca item) {
+
+        if(this.buscarItem(item.getCodigo()) != null) {
+            System.out.println("Item com o código inserido já foi cadastrado.");
+            return;
+        }
+
         this.itens.add(item);
     }
 
