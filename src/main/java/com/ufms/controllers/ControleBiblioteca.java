@@ -95,6 +95,11 @@ public class ControleBiblioteca implements OperacoesBiblioteca {
     @Override
     public void realizarEmprestimo(ItemBiblioteca item, String RA_Devedor) {
         
+        if(item == null) {
+            System.out.println("O Item inserido não existe.");
+            return;
+        }
+
         if(item.isStatus()) {
             System.out.println("O Item em questão já está emprestado.");
             
@@ -117,6 +122,11 @@ public class ControleBiblioteca implements OperacoesBiblioteca {
     @Override
     public void realizarDevolucao(ItemBiblioteca item, String RA_Devedor) {
     	
+        if(item == null) {
+            System.out.println("O Item inserido não existe.");
+            return;
+        }
+
         if(!item.isStatus()) {
             System.out.println("Não há nenhum empréstimo associado ao item");
         }
@@ -136,7 +146,14 @@ public class ControleBiblioteca implements OperacoesBiblioteca {
 
     @Override
     public List<IEmprestimo> verificarHistorico(ItemBiblioteca item) {
+
     	List<IEmprestimo> item_historico = new ArrayList<IEmprestimo>();
+
+        if(item == null) {
+            System.out.println("O Item inserido não existe.");
+            return item_historico;
+        }
+
         
         for(IEmprestimo e : historico) {
             if(e instanceof Emprestimo em && em.getItem().getCodigo() == item.getCodigo()) {
